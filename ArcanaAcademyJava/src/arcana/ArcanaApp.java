@@ -99,7 +99,7 @@ public class ArcanaApp extends JFrame {
 
     // Behavioural constants.
     static final int MAX_SELECTION = 3;   // a reading uses exactly 3 cards
-    static final int GRID_COLS     = 4;   // deck grid column count
+    static final int GRID_COLS     = 3;   // deck grid column count
     static final int CARD_VIEWPORT = 270; // fixed height of the deck scroller
 
     /* ═══════════════════════════ STATE ════════════════════════════ */
@@ -615,7 +615,7 @@ public class ArcanaApp extends JFrame {
         content.setBorder(new EmptyBorder(SP_1, SP_3, SP_3, SP_3));
 
         JLabel title = new JLabel("\u25D4 Memory", SwingConstants.CENTER);
-        title.setFont(HEADER_FONT);
+        title.setFont(HEADER_FONT.deriveFont(24f));
         title.setForeground(GOLD);
         title.setBorder(new EmptyBorder(0, 0, SP_2, 0));
         content.add(title, BorderLayout.NORTH);
@@ -1336,13 +1336,13 @@ public class ArcanaApp extends JFrame {
      *  and a slightly brighter thumb while dragging. */
     private static class ArcanaScrollBarUI extends BasicScrollBarUI {
         @Override protected void configureScrollBarColors() {
-            thumbColor = PANEL_HI;
+            thumbColor = TEXT;
             trackColor = BG;
         }
         @Override protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(isDragging ? GOLD_DIM : PANEL_HOV);
+            g2.setColor(isDragging ? GOLD : TEXT);
             g2.fillRoundRect(r.x + 2, r.y + 2, r.width - 4, r.height - 4, 6, 6);
             g2.dispose();
         }
