@@ -4,6 +4,7 @@ final class DeckData {
     private DeckData() {}
 
     // Each major: { name, meaning, symbol, lesson, reversedMeaning, reversedLesson }
+    // manually entered the reverse meanings (short summary) into each stored array
     static final String[][] MAJORS = {
         { "0 · The Fool",
             "new beginnings and a leap of faith",
@@ -217,7 +218,8 @@ final class DeckData {
         "Queens embody their suit inwardly — mature, intuitive command of its energy.",
         "Kings direct their suit outwardly — seasoned authority and responsibility."
     };
-
+    
+    // reversed meanings for the minors
     static final String[] RANK_REVERSED = {
         "blocked potential and missed opportunities",
         "imbalance and indecision",

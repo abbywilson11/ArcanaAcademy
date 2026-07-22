@@ -6,12 +6,6 @@ import java.util.List;
 
 /**
  * Deck.java — builds the full 78-card deck, ported from buildDeck() in js/deck.js.
- *
- * NOTE (port fix): the original JavaScript pushed every Minor Arcana card TWICE —
- * once without reversed data and once with it — producing a 134-card deck where
- * the first copy of each minor showed "undefined" for its reversed lesson.
- * This port pushes each minor exactly once, WITH its reversed data, so the deck
- * is exactly 22 majors + 56 minors = 78 cards as the requirements specify.
  */
 public final class Deck {
 
@@ -36,15 +30,15 @@ public final class Deck {
                         + DeckData.RANK_LESSONS[r] + " " + DeckData.SUIT_LESSONS[s] + " "
                         + "Read together, this card speaks to " + meaning + " \u2014 "
                         + "watch how that theme shifts depending on the cards beside it.";
-                String reversedMeaning = "blocked or excessive " + DeckData.RANK_THEMES[r]
+                String reversedMeaning = "blocked or excessive " + DeckData.RANK_THEMES[r] //reversed meaning is a short summary of the card's theme, not the full lesson
                         + " " + DeckData.SUIT_THEMES[s];
-                String reversedLesson = "Reversed, the " + name + " suggests "
+                String reversedLesson = "Reversed, the " + name + " suggests " //reversed lesson is a longer explanation of the reversed meaning, not the full lesson
                         + DeckData.RANK_REVERSED[r] + " within the domain of "
                         + DeckData.SUIT_THEMES[s] + ". When this card appears inverted, the usual energy of the "
                         + DeckData.RANKS[r] + " is either blocked, excessive, or turned inward. "
                         + "Ask yourself where resistance or imbalance might be at play.";
-                deck.add(new Card(name, meaning, DeckData.SUIT_SYMS[s], lesson,
-                        reversedMeaning, reversedLesson));
+                deck.add(new Card(name, meaning, DeckData.SUIT_SYMS[s], lesson, 
+                        reversedMeaning, reversedLesson)); //add the card to the deck with its reversed data
             }
         }
         return deck;

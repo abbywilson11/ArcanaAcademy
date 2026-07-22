@@ -18,7 +18,7 @@ public class Card {
         this.meaning = meaning;
         this.symbol = symbol;
         this.lesson = lesson;
-        this.reversedMeaning = reversedMeaning;
+        this.reversedMeaning = reversedMeaning; 
         this.reversedLesson = reversedLesson;
     }
 
