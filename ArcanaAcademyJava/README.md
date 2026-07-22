@@ -1,5 +1,5 @@
 # Arcana Academy — Tarot Interpretation Learning App (Java Edition)
-### SEG2105 – Introduction to Software Engineering · Summer 2026
+### SEG2105 – Introduction to Software Engineering
 
 A tarot card interpretation **learning tool**, now a Java desktop application
 (Java Swing — plain Java, **not** JavaScript, **no Android Studio needed**).
@@ -44,9 +44,6 @@ javac -d bin src/arcana/*.java
 java -cp bin arcana.ArcanaApp
 ```
 
-That's it — a desktop window opens. No server, no browser, no build tool,
-no IDE, no Android Studio.
-
 ### Enabling AI interpretations (optional)
 
 Without an API key, the built-in learning-guide engine handles every reading
@@ -81,26 +78,6 @@ ArcanaAcademyJava/
 └── README.md                   This file
 ```
 
----
-
-## What changed in the port (web → Java)
-
-| Web version | Java version |
-|---|---|
-| Browser page (`index.html` + CSS) | Java Swing desktop window, same mystical indigo/gold theme |
-| `localStorage` persistence | Plain text file at `~/.arcana-academy/readings.txt` (fields URL-encoded so no question can corrupt the file) |
-| `fetch()` + `AbortController` 10 s timeout | `java.net.http.HttpClient` with a 10 s request timeout |
-| Async `await interpret()` | `SwingWorker` background thread so the UI never freezes |
-| Live search via `input` events | Live search via a `DocumentListener` |
-| Lesson modal + Escape to close | Modal `JDialog` + Escape to close |
-| **Bug fixed:** `buildDeck()` pushed every Minor Arcana card **twice** (once without reversed data), producing a 134-card deck where duplicates showed "undefined" as their reversed lesson | Each minor is added exactly once **with** reversed data → exactly **78 unique cards** as the requirements specify |
-
-Everything else — prompt text, section parsing/validation, sentence clamping
-(1/1/1/2), local fallback wording, error-handling strategy, reversed-card
-feature — is a line-for-line faithful port.
-
----
-
 ## Requirements traceability
 
 | Requirement | Implementation |
@@ -126,20 +103,6 @@ feature — is a line-for-line faithful port.
 | `ArcanaApp.java` | Toast + block when not exactly 3 cards selected; toast + block on empty question; reveal button disabled while a reading is in flight; interpreter runs on a background thread so the UI can't freeze; try/catch around the interpret call; empty-state message on Memory tab |
 | `Storage.java` | `saveReading()` wrapped in try/catch — a disk failure never crashes the reading display; `loadAll()` returns an empty list on any error; corrupted lines skipped; entries without exactly 4 sections filtered out; fields URL-encoded so pipes/newlines in questions can't corrupt the file |
 
----
-
-## How to record your demo video
-
-1. Run the app (`run.bat` / `run.sh`).
-2. Use your computer's built-in screen recorder:
-   - **Windows**: Win + G → Xbox Game Bar → Record
-   - **Mac**: Cmd + Shift + 5 → Record Selected Portion
-3. Walk through: Home tab → search for a card → select 3 → set one reversed
-   → enter a question → reveal interpretation → Learn tab → click a card
-   → Memory tab → expand the saved reading → clear memory.
-4. Aim for 5–10 minutes as per the rubric.
-
----
 
 ## AI tools used
 
