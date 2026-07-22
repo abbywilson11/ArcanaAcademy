@@ -100,7 +100,7 @@ public class ArcanaApp extends JFrame {
     // Behavioural constants.
     static final int MAX_SELECTION = 3;   // a reading uses exactly 3 cards
     static final int GRID_COLS     = 4;   // deck grid column count
-    static final int CARD_VIEWPORT = 275; // fixed height of the deck scroller
+    static final int CARD_VIEWPORT = 270; // fixed height of the deck scroller
 
     /* ═══════════════════════════ STATE ════════════════════════════ */
     /** Cards the user has picked on the Home tab, in selection order.
@@ -192,13 +192,14 @@ public class ArcanaApp extends JFrame {
         GridBagConstraints gc = gbc(0);
 
         JLabel title = new JLabel("\u2726 Arcana Academy \u2726", SwingConstants.CENTER);
-        title.setFont(TITLE_FONT);
+        // set font size by deriving from base TITLE_FONT
+        title.setFont(TITLE_FONT.deriveFont(28f));
         title.setForeground(GOLD);
         gc.gridy = 0; h.add(title, gc);
 
         JLabel sub = new JLabel("A tarot interpretation learning tool", SwingConstants.CENTER);
-        sub.setFont(BODY_FONT);
-        sub.setForeground(MUTED);
+        sub.setFont(BODY_FONT.deriveFont(14f));
+        sub.setForeground(TEXT);
         gc.gridy = 1; gc.insets = ins(2, 0, 0, 0); h.add(sub, gc);
         return h;
     }
@@ -211,7 +212,7 @@ public class ArcanaApp extends JFrame {
         // Toast: a single reusable label that showToast() writes into and
         // clears after a few seconds. Holds " " so it always reserves height.
         toast = new JLabel(" ", SwingConstants.CENTER);
-        toast.setFont(BODY_FONT);
+        toast.setFont(BODY_FONT.deriveFont(18f));
         toast.setForeground(GOLD);
         toast.setBorder(new EmptyBorder(SP_1, SP_2, SP_1, SP_2)); 
         south.add(toast, BorderLayout.NORTH);
@@ -271,7 +272,7 @@ public class ArcanaApp extends JFrame {
         JLabel sub = new JLabel(
             "Search or scroll the deck \u00b7 choose three cards \u00b7 ask your question",
             SwingConstants.CENTER);
-        sub.setFont(BOLD_FONT);
+        sub.setFont(BOLD_FONT.deriveFont(16f));
         sub.setForeground(MUTED);
         gc.gridy = row++; gc.insets = ins(0, 0, SP_2, 0);
         controls.add(sub, gc);
@@ -306,7 +307,7 @@ public class ArcanaApp extends JFrame {
 
         // Status pill: tells the user how many cards are chosen.
         statusPill = new JLabel("Cards chosen: 0 of 3", SwingConstants.CENTER);
-        statusPill.setFont(BOLD_FONT);
+        statusPill.setFont(BOLD_FONT.deriveFont(16f));
         statusPill.setForeground(LAVENDER);
         gc.gridy = row++; gc.insets = ins(SP_2, 2, 2, 0);
         controls.add(statusPill, gc);
@@ -341,6 +342,7 @@ public class ArcanaApp extends JFrame {
         revealBtn = RoundedButton.primary("Reveal Interpretation");
         revealBtn.setEnabled(false);
         revealBtn.setToolTipText("Choose 3 cards and type a question to enable (Ctrl+Enter)");
+        revealBtn.setFont(BOLD_FONT.deriveFont(16f));
         revealBtn.getAccessibleContext().setAccessibleDescription(
                 "Reveals the interpretation once three cards are chosen and a question is typed");
         revealBtn.addActionListener(e -> revealReading());
@@ -479,7 +481,7 @@ public class ArcanaApp extends JFrame {
                 .map(c -> c.card.shortName() + (c.reversed ? " (rev.)" : ""))
                 .reduce((a, b) -> a + "  \u00b7  " + b).orElse("");
         JLabel titleLbl = new JLabel(cardLine, SwingConstants.CENTER);
-        titleLbl.setFont(SMALL_FONT);
+        titleLbl.setFont(SMALL_FONT.deriveFont(18f));
         titleLbl.setForeground(GOLD);
         gc.gridy = row++; gc.insets = ins(0, 0, SP_3 - 2, 0);
         panel.add(titleLbl, gc);
@@ -508,7 +510,7 @@ public class ArcanaApp extends JFrame {
 
         // Provenance note (AI vs built-in guide).
         JLabel src = new JLabel(sourceText, SwingConstants.CENTER);
-        src.setFont(SMALL_FONT);
+        src.setFont(SMALL_FONT.deriveFont(14f));
         src.setForeground(MUTED);
         gc.gridy = row++; gc.insets = ins(SP_1, 0, SP_3 - 4, 0);
         panel.add(src, gc);
@@ -533,8 +535,8 @@ public class ArcanaApp extends JFrame {
         GridBagConstraints gc = gbc(0);
         int row = 0;
 
-        JLabel title = new JLabel("\u2727 Learn the Cards \u2727", SwingConstants.CENTER);
-        title.setFont(HEADER_FONT);
+        JLabel title = new JLabel("Learn the Cards", SwingConstants.CENTER);
+        title.setFont(HEADER_FONT.deriveFont(24f));
         title.setForeground(GOLD);
         gc.gridy = row++; gc.insets = ins(0, 0, SP_1, 0);
         controls.add(title, gc);
@@ -542,8 +544,8 @@ public class ArcanaApp extends JFrame {
         JLabel sub = new JLabel(
             "Click any card to read what it means and how to use it in a reading.",
             SwingConstants.CENTER);
-        sub.setFont(BODY_FONT);
-        sub.setForeground(MUTED);
+        sub.setFont(BODY_FONT.deriveFont(14f));
+        sub.setForeground(TEXT);
         gc.gridy = row++; gc.insets = ins(0, 0, SP_2, 0);
         controls.add(sub, gc);
 
@@ -585,7 +587,7 @@ public class ArcanaApp extends JFrame {
         gc.gridy = row++; gc.insets = ins(0, 0, SP_1, 0); panel.add(sym, gc);
 
         JLabel name = new JLabel(card.name, SwingConstants.CENTER);
-        name.setFont(HEADER_FONT);
+        name.setFont(HEADER_FONT.deriveFont(24f));
         name.setForeground(TEXT);
         gc.gridy = row++; gc.insets = ins(0, 0, SP_2 + 2, 0); panel.add(name, gc);
 
@@ -593,7 +595,7 @@ public class ArcanaApp extends JFrame {
         panel.add(makeWrappedText(card.lesson, PANEL), gc);
 
         JLabel revLabel = new JLabel("\u21B6 Reversed", SwingConstants.CENTER);
-        revLabel.setFont(HEADER_FONT);
+        revLabel.setFont(HEADER_FONT.deriveFont(24f));
         revLabel.setForeground(GOLD);
         gc.gridy = row++; gc.insets = ins(0, 0, SP_1, 0); panel.add(revLabel, gc);
 
@@ -652,7 +654,7 @@ public class ArcanaApp extends JFrame {
                     "<html><div style='text-align:center;'>No readings yet.<br>"
                     + "Go to Home, choose three cards, and ask your first question.</div></html>",
                     SwingConstants.CENTER);
-            empty.setFont(BODY_FONT);
+            empty.setFont(BODY_FONT.deriveFont(18f));
             empty.setForeground(MUTED);
             empty.setAlignmentX(Component.CENTER_ALIGNMENT);
             empty.setBorder(new EmptyBorder(SP_4 + 6, 0, 0, 0));
@@ -681,22 +683,22 @@ public class ArcanaApp extends JFrame {
                 item.setToolTipText("Click to expand or collapse this reading");
 
                 JLabel date = new JLabel(fmt.format(new Date(entry.timestamp)));
-                date.setFont(SMALL_FONT);
+                date.setFont(SMALL_FONT.deriveFont(14f));
                 date.setForeground(MUTED);
                 item.add(date);
 
                 JLabel question = new JLabel("<html>" + escapeHtml(entry.question) + "</html>");
-                question.setFont(HEADER_FONT);
+                question.setFont(HEADER_FONT.deriveFont(18f));
                 question.setForeground(TEXT);
                 item.add(question);
 
                 JLabel cardsLbl = new JLabel(String.join("  \u2022  ", entry.cardNames));
-                cardsLbl.setFont(SMALL_FONT);
+                cardsLbl.setFont(SMALL_FONT.deriveFont(14f));
                 cardsLbl.setForeground(GOLD);
                 item.add(cardsLbl);
 
                 JLabel expandHint = new JLabel("\u25BE Show reading");
-                expandHint.setFont(SMALL_FONT);
+                expandHint.setFont(SMALL_FONT.deriveFont(16f));
                 expandHint.setForeground(LAVENDER);
                 expandHint.setBorder(new EmptyBorder(SP_1, 0, 0, 0));
                 item.add(expandHint);
@@ -834,7 +836,7 @@ public class ArcanaApp extends JFrame {
 
             // ── Contents: symbol, name, optional reverse button ──
             JLabel sym = new JLabel(card.symbol, SwingConstants.CENTER);
-            sym.setFont(SYMBOL_FONT);
+            sym.setFont(SYMBOL_FONT.deriveFont(18f));
             sym.setForeground(GOLD);
             sym.setAlignmentX(Component.CENTER_ALIGNMENT);
             add(Box.createVerticalStrut(SP_2 - 2));
@@ -843,7 +845,7 @@ public class ArcanaApp extends JFrame {
             JLabel nm = new JLabel(
                     "<html><div style='text-align:center;'>" + escapeHtml(card.name) + "</div></html>",
                     SwingConstants.CENTER);
-            nm.setFont(SMALL_FONT);
+            nm.setFont(SMALL_FONT.deriveFont(14f));
             nm.setForeground(TEXT);
             nm.setAlignmentX(Component.CENTER_ALIGNMENT);
             add(nm);
@@ -940,7 +942,7 @@ public class ArcanaApp extends JFrame {
                     + escapeHtml(query.trim())
                     + "\u201d.<br>Try a shorter word, like 'cup' or 'star'.</div></html>",
                     SwingConstants.CENTER);
-            none.setFont(BODY_FONT);
+            none.setFont(BODY_FONT.deriveFont(18f));
             none.setForeground(MUTED);
             none.setBorder(new EmptyBorder(SP_3, 0, SP_3, 0));
             grid.add(none);
@@ -1036,7 +1038,7 @@ public class ArcanaApp extends JFrame {
         t.setWrapStyleWord(true);
         t.setEditable(false);
         t.setFocusable(false); // stays out of the Tab order — it's static text
-        t.setFont(BODY_FONT);
+        t.setFont(BODY_FONT.deriveFont(16f));
         t.setBackground(bg);
         t.setForeground(TEXT);
         t.setBorder(new EmptyBorder(2, 0, 2, 0));
@@ -1172,7 +1174,7 @@ public class ArcanaApp extends JFrame {
             b.hoverFill    = GOLD.brighter();
             b.disabledFill = GOLD_DIM;
             b.textColor    = new Color(0x2A2149);
-            b.setFont(HEADER_FONT);
+            b.setFont(HEADER_FONT.deriveFont(24f));
             b.setBorder(new EmptyBorder(SP_2, SP_4, SP_2, SP_4));
             return b;
         }
@@ -1184,7 +1186,7 @@ public class ArcanaApp extends JFrame {
             b.disabledFill = PANEL;
             b.textColor    = LAVENDER;
             b.outline      = PANEL_HI;
-            b.setFont(BODY_FONT);
+            b.setFont(BODY_FONT.deriveFont(16f));
             b.setBorder(new EmptyBorder(SP_2, SP_3 - 2, SP_2, SP_3 - 2));
             return b;
         }
@@ -1266,7 +1268,7 @@ public class ArcanaApp extends JFrame {
 
         RoundedTextField(String placeholder) {
             this.placeholder = placeholder;
-            setFont(BODY_FONT);
+            setFont(BODY_FONT.deriveFont(16f));
             setOpaque(false); // rounded fill painted below
             setForeground(TEXT);
             setCaretColor(GOLD);
@@ -1310,7 +1312,7 @@ public class ArcanaApp extends JFrame {
             this.placeholder = placeholder;
             setLineWrap(true);
             setWrapStyleWord(true);
-            setFont(BODY_FONT);
+            setFont(BODY_FONT.deriveFont(16f));
             setBackground(PANEL);
             setForeground(TEXT);
             setCaretColor(GOLD);
@@ -1368,14 +1370,14 @@ public class ArcanaApp extends JFrame {
         UIManager.put("ToolTip.background", PANEL_HI);
         UIManager.put("ToolTip.foreground", TEXT);
         UIManager.put("ToolTip.border", new RoundedLineBorder(GOLD, 1, RADIUS_MD));
-        UIManager.put("ToolTip.font", SMALL_FONT);
+        UIManager.put("ToolTip.font", SMALL_FONT.deriveFont(14f));
 
         // Themed option panes (used by the Clear-memory confirmation).
         UIManager.put("OptionPane.background", PANEL);
         UIManager.put("Panel.background", PANEL);
         UIManager.put("OptionPane.messageForeground", TEXT);
-        UIManager.put("OptionPane.messageFont", BODY_FONT);
-        UIManager.put("OptionPane.buttonFont", BODY_FONT);
+        UIManager.put("OptionPane.messageFont", BODY_FONT.deriveFont(16f));
+        UIManager.put("OptionPane.buttonFont", BODY_FONT.deriveFont(16f));
 
         // All Swing work happens on the Event Dispatch Thread.
         SwingUtilities.invokeLater(() -> new ArcanaApp().setVisible(true));
