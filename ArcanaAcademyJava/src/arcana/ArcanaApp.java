@@ -100,7 +100,7 @@ public class ArcanaApp extends JFrame {
     // Behavioural constants.
     static final int MAX_SELECTION = 3;   // a reading uses exactly 3 cards
     static final int GRID_COLS     = 4;   // deck grid column count
-    static final int CARD_VIEWPORT = 300; // fixed height of the deck scroller
+    static final int CARD_VIEWPORT = 275; // fixed height of the deck scroller
 
     /* ═══════════════════════════ STATE ════════════════════════════ */
     /** Cards the user has picked on the Home tab, in selection order.
@@ -213,7 +213,7 @@ public class ArcanaApp extends JFrame {
         toast = new JLabel(" ", SwingConstants.CENTER);
         toast.setFont(BODY_FONT);
         toast.setForeground(GOLD);
-        toast.setBorder(new EmptyBorder(SP_1, SP_2, SP_1, SP_2));
+        toast.setBorder(new EmptyBorder(SP_1, SP_2, SP_1, SP_2)); 
         south.add(toast, BorderLayout.NORTH);
 
         JPanel nav = new JPanel(new GridLayout(1, 3, SP_2, 0));
@@ -376,7 +376,7 @@ public class ArcanaApp extends JFrame {
     }
 
     /** Flips a selected card between upright and reversed. */
-    
+
     /* this is the part that i did, adding the feature that the user can choose to reverse a card (this 
     changes the meaning of the card and how it applies to the question) */
 
